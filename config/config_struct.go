@@ -18,7 +18,7 @@ type (
 		Username  string `yaml:"username"`
 		Password  string `yaml:"password"`
 		Host      string `yaml:"host"`
-		Port      string `yaml:"port"`
+		Port      int    `yaml:"port"`
 		Adabter   string `yaml:"adabter"`
 		Time_zone string `yaml:"time_zone"`
 		Charset   string `yaml:"charset"`

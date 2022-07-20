@@ -40,5 +40,6 @@ go.sum
 *.db
 dbconfig.yml
 *tmp/
+*log/data
 >>>>>>> project configs
 >>>>>>> projects configs

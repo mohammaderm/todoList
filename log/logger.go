@@ -57,27 +57,27 @@ func LoggerWriter(lc *Logconfig) (io.Writer, error) {
 //Info is log with level Info
 func (l *logBundle) Info(msg string, extras ...map[string]interface{}) {
 	l.logger.WithFields(logrus.Fields{
-		"params": extras,
+		"extras": extras,
 	}).Info(msg)
 }
 
 //Warning is log with level warning
 func (l *logBundle) Warning(msg string, extras ...map[string]interface{}) {
 	l.logger.WithFields(logrus.Fields{
-		"params": extras,
+		"extras": extras,
 	}).Warning(msg)
 }
 
 //Error is log with level error
 func (l *logBundle) Error(msg string, extras ...map[string]interface{}) {
 	l.logger.WithFields(logrus.Fields{
-		"params": extras,
+		"extras": extras,
 	}).Error(msg)
 }
 
 //Panic is log with level panic
 func (l *logBundle) Panic(msg string, extras ...map[string]interface{}) {
 	l.logger.WithFields(logrus.Fields{
-		"params": extras,
+		"extras": extras,
 	}).Panic(msg)
 }
