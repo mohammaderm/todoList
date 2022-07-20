@@ -1,0 +1,21 @@
+database:
+  postgresql:
+    database: todoList
+    username: admin
+    password: admin
+    host: localhost
+    port: 5432
+    adabter: postgresql
+    time_zone: Asia/Tehran
+    charset: utf8mb4
+   
+logger:
+  max_age: 720h
+  max_size: 20MB
+  filename_pattern: "%Y-%m-%dT%H:%M"
+  rotation_time: "24h"
+  internal_path: "./log"
+
+server:
+  host: localhost
+  port: 8089
