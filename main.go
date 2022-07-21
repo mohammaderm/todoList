@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/mohammaderm/todoList/app"
 	"github.com/mohammaderm/todoList/config"
+	job "github.com/mohammaderm/todoList/internal/repository/job"
 	account "github.com/mohammaderm/todoList/internal/repository/user"
 	"github.com/mohammaderm/todoList/log"
 )
@@ -24,5 +25,6 @@ func main() {
 		logger.Panic("can not connect to database.")
 	}
 	userRepository := account.NewRepository(db, logger)
+	jobRepository := job.NewRepository(db, logger)
 
 }
