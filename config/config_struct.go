@@ -5,6 +5,7 @@ type (
 		Database Database `yaml:"database"`
 		Logger   Logger   `yaml:"logger"`
 		Server   Server   `yaml:"server"`
+		Redis    Redis    `yaml:"redis"`
 	}
 	Database struct {
 		Postgresql Postgresql `yaml:"postgresql"`
@@ -12,6 +13,12 @@ type (
 	Server struct {
 		Host string `yaml:"host"`
 		Port string `yaml:"port"`
+	}
+	Redis struct {
+		Server   string `yaml:"server"`
+		Password string `yaml:"password"`
+		DB       int    `yaml:"db"`
+		Port     string `yaml:"port"`
 	}
 	Postgresql struct {
 		Database  string `yaml:"database"`

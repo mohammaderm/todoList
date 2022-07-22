@@ -21,3 +21,9 @@ logger:
 server:
   host: localhost
   port: 8089
+
+redis:
+  server: localhost
+  password: ""
+  db: 0
+  port: 6379

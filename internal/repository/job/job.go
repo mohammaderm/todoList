@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/mohammaderm/todoList/internal/repository/models"
+	"github.com/mohammaderm/todoList/internal/models"
 	"github.com/mohammaderm/todoList/log"
 
 	"github.com/jmoiron/sqlx"
