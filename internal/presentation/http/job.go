@@ -87,8 +87,9 @@ func (h *JobHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 
 func (h *JobHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	JobId := mux.Vars(r)["jobid"]
+	JobIdUint, _ := strconv.Atoi(JobId)
 	err := h.jobServices.Delete(r.Context(), dto.DeleteJobReq{
-		Id:        JobId.(uint),
+		Id:        uint(JobIdUint),
 		AccountId: r.Context().Value("UserId").(uint),
 	})
 	if err != nil {
@@ -105,8 +106,9 @@ func (h *JobHandler) Delete(w http.ResponseWriter, r *http.Request) {
 
 func (h *JobHandler) Update(w http.ResponseWriter, r *http.Request) {
 	JobId := mux.Vars(r)["jobid"]
+	JobIdUint, _ := strconv.Atoi(JobId)
 	err := h.jobServices.Update(r.Context(), dto.UpdateJob{
-		Id:        JobId.(uint),
+		Id:        uint(JobIdUint),
 		AccountId: r.Context().Value("UserId").(uint),
 	})
 	if err != nil {
