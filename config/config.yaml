@@ -27,3 +27,7 @@ redis:
   password: ""
   db: 0
   port: 6379
+
+auth:
+  secretkey: "jwt@mohammaderm5060Mohammad"
+  issue: "127.0.1.1"

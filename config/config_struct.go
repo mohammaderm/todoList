@@ -6,6 +6,11 @@ type (
 		Logger   Logger   `yaml:"logger"`
 		Server   Server   `yaml:"server"`
 		Redis    Redis    `yaml:"redis"`
+		Auth     Auth     `yaml:"auth"`
+	}
+	Auth struct {
+		Secretkey string `yaml:"secretkey"`
+		Issue     string `yaml:"issue"`
 	}
 	Database struct {
 		Postgresql Postgresql `yaml:"postgresql"`

@@ -20,4 +20,8 @@ type (
 	GetByUsernameRes struct {
 		User *models.User `json:"user" db:"user"`
 	}
+	UserLogin struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
 )

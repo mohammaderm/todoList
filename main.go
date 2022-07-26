@@ -3,8 +3,10 @@ package main
 import (
 	"github.com/mohammaderm/todoList/app"
 	"github.com/mohammaderm/todoList/config"
-	job "github.com/mohammaderm/todoList/internal/repository/job"
+	jobrepo "github.com/mohammaderm/todoList/internal/repository/job"
 	account "github.com/mohammaderm/todoList/internal/repository/user"
+	jobservice "github.com/mohammaderm/todoList/internal/service/job"
+	"github.com/mohammaderm/todoList/internal/service/user"
 	"github.com/mohammaderm/todoList/log"
 )
 
@@ -21,10 +23,15 @@ func main() {
 		logger.Panic("can not use log pkg.")
 	}
 	db, err := app.DBconnection(logger, &config.Database)
+	redisConn := app.ConnectRedis(logger, &config.Redis)
 	if err != nil {
 		logger.Panic("can not connect to database.")
 	}
 	userRepository := account.NewRepository(db, logger)
-	jobRepository := job.NewRepository(db, logger)
+	jobRepository := jobrepo.NewRepository(db, logger)
+
+	jobCache := jobservice.NewJObCache(logger, redisConn)
+	userService := user.NewService(logger, userRepository)
+	jobService := jobservice.NewService(logger, jobRepository, jobCache)
 
 }

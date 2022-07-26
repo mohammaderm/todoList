@@ -8,7 +8,7 @@ import (
 	"github.com/mohammaderm/todoList/log"
 )
 
-func connectRedis(logger log.Logger, config *config.Redis) *redis.Client {
+func ConnectRedis(logger log.Logger, config *config.Redis) *redis.Client {
 	client := redis.NewClient(&redis.Options{
 		Addr:     config.Server + ":" + config.Port,
 		Password: config.Password,
