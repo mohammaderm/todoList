@@ -22,8 +22,8 @@ type (
 		// job interfaces
 		Create(ctx context.Context, job models.CreateJob) error
 		GetAll(ctx context.Context, accountid uint, offset int) (*[]models.Job, error)
-		Delete(ctx context.Context, id uint) error
-		Update(ctx context.Context, id uint) error
+		Delete(ctx context.Context, jobid, accountid uint) error
+		Update(ctx context.Context, jobid, accountid uint) error
 	}
 )
 
@@ -53,8 +53,8 @@ func (r *repository) GetAll(ctx context.Context, accountid uint, offset int) (*[
 	return &result, nil
 }
 
-func (r *repository) Delete(ctx context.Context, id uint) error {
-	result, err := r.db.ExecContext(ctx, DeleteJob, id)
+func (r *repository) Delete(ctx context.Context, jobid, accountid uint) error {
+	result, err := r.db.ExecContext(ctx, DeleteJob, jobid, accountid)
 	if err != nil {
 		return err
 	}
@@ -65,8 +65,8 @@ func (r *repository) Delete(ctx context.Context, id uint) error {
 	return nil
 }
 
-func (r *repository) Update(ctx context.Context, id uint) error {
-	result, err := r.db.ExecContext(ctx, UpdateJob, id)
+func (r *repository) Update(ctx context.Context, jobid, accountid uint) error {
+	result, err := r.db.ExecContext(ctx, UpdateJob, jobid, accountid)
 	if err != nil {
 		return err
 	}

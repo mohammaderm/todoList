@@ -2,6 +2,7 @@ package job
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/mohammaderm/todoList/internal/dto"
@@ -19,7 +20,7 @@ type (
 	JobServices interface {
 		Create(ctx context.Context, req dto.CreateJobReq) error
 		GetAll(ctx context.Context, req dto.GetAllJobReq) (dto.GetAllJobRes, error)
-		Delete(ctx context.Context, req dto.DeleteJob) error
+		Delete(ctx context.Context, req dto.DeleteJobReq) error
 		Update(ctx context.Context, req dto.UpdateJob) error
 	}
 )
@@ -42,7 +43,7 @@ func (s *Service) Create(ctx context.Context, req dto.CreateJobReq) error {
 }
 
 func (s *Service) GetAll(ctx context.Context, req dto.GetAllJobReq) (dto.GetAllJobRes, error) {
-	result, err := s.cache.GetAll(ctx, string(req.Offset))
+	result, err := s.cache.GetAll(ctx, fmt.Sprint(req.Offset))
 	if err == redis.Nil {
 		s.logger.Warning("can not found value in cache", map[string]interface{}{
 			"err": err.Error(),
@@ -61,8 +62,8 @@ func (s *Service) GetAll(ctx context.Context, req dto.GetAllJobReq) (dto.GetAllJ
 	}, nil
 }
 
-func (s *Service) Delete(ctx context.Context, req dto.DeleteJob) error {
-	err := s.jobrepository.Delete(ctx, req.Id)
+func (s *Service) Delete(ctx context.Context, req dto.DeleteJobReq) error {
+	err := s.jobrepository.Delete(ctx, req.Id, req.AccountId)
 	if err != nil {
 		return err
 	}
@@ -74,7 +75,7 @@ func (s *Service) Delete(ctx context.Context, req dto.DeleteJob) error {
 }
 
 func (s *Service) Update(ctx context.Context, req dto.UpdateJob) error {
-	err := s.jobrepository.Update(ctx, req.Id)
+	err := s.jobrepository.Update(ctx, req.Id, req.AccountId)
 	if err != nil {
 		return err
 	}

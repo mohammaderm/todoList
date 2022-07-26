@@ -13,10 +13,12 @@ type (
 		AccountId uint `json:"accountid"`
 		Offset    int  `json:"offset"`
 	}
-	DeleteJob struct {
-		Id uint `json:"id"`
+	DeleteJobReq struct {
+		Id        uint `json:"id"`
+		AccountId uint `json:"accountid"`
 	}
 	UpdateJob struct {
-		Id uint `json:"id"`
+		Id        uint `json:"id"`
+		AccountId uint `json:"accountid"`
 	}
 )
