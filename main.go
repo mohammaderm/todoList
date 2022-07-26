@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/mohammaderm/todoList/app"
 	"github.com/mohammaderm/todoList/config"
+	handler "github.com/mohammaderm/todoList/internal/presentation/http"
 	jobrepo "github.com/mohammaderm/todoList/internal/repository/job"
 	account "github.com/mohammaderm/todoList/internal/repository/user"
 	jobservice "github.com/mohammaderm/todoList/internal/service/job"
@@ -34,4 +35,13 @@ func main() {
 	userService := user.NewService(logger, userRepository)
 	jobService := jobservice.NewService(logger, jobRepository, jobCache)
 
+	userHandler := handler.NewAuthHanlder(logger, userService)
+	jobHandler := handler.NewJobHandller(logger, jobService)
+
+	router := app.RouterProvider(&app.RouteProvider{
+		AccountHandler: userHandler,
+		JobHandler:     jobHandler,
+	})
+	server := app.ServerProvider(logger, &config.Server, router)
+	server.ListenAndServe()
 }
