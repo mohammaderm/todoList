@@ -15,7 +15,7 @@ type (
 	CreateJob struct {
 		Name        string `json:"name" db:"name"`
 		Description string `json:"description" db:"description"`
-		AccountId   uint   `json:"accountid" db:"accountid"`
-		Status      bool   `json:"status" db:"status"`
+		AccountId   uint   `json:"-" db:"accountid"`
+		Status      bool   `json:"-" db:"status"`
 	}
 )

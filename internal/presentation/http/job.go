@@ -74,6 +74,7 @@ func (h *JobHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		Offset:    offsetint,
 	})
 	if err != nil {
+		print(err.Error())
 		h.errorJSON(w, errors.New("can not found any job"), http.StatusNotFound)
 		return
 	}

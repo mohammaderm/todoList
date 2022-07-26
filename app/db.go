@@ -24,6 +24,7 @@ func DBconnection(logger log.Logger, config *config.Database) (*sqlx.DB, error) 
 		})
 		return nil, err
 	}
+	println("postgres is connected succesfully")
 	return con, nil
 
 }

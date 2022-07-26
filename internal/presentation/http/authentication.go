@@ -61,6 +61,7 @@ func (a *AuthtHandler) Register(w http.ResponseWriter, r *http.Request) {
 		Email:    userreq.Email,
 		Password: string(hashpass),
 	}); err != nil {
+		println(err.Error())
 		a.errorJSON(w, errors.New("can not create user"), http.StatusInternalServerError)
 		return
 	}

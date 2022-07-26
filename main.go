@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/mohammaderm/todoList/app"
 	"github.com/mohammaderm/todoList/config"
 	handler "github.com/mohammaderm/todoList/internal/presentation/http"
@@ -43,5 +45,9 @@ func main() {
 		JobHandler:     jobHandler,
 	})
 	server := app.ServerProvider(logger, &config.Server, router)
-	server.ListenAndServe()
+	fmt.Printf("server is running on port %s ... \n", config.Server.Port)
+	err = server.ListenAndServe()
+	if err != nil {
+		logger.Panic("can not run server")
+	}
 }
