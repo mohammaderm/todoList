@@ -9,6 +9,7 @@ import (
 	"github.com/mohammaderm/todoList/config"
 	handler "github.com/mohammaderm/todoList/internal/presentation/http"
 	"github.com/mohammaderm/todoList/log"
+	"github.com/rs/cors"
 )
 
 type RouteProvider struct {
@@ -17,9 +18,20 @@ type RouteProvider struct {
 }
 
 func ServerProvider(logger log.Logger, config *config.Server, router *mux.Router) *http.Server {
+
+	C := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "UPDATE", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Content-Type", "Origin", "X-CSRF-Token", "token"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	})
+
+	handlers := C.Handler(router)
+
 	srv := &http.Server{
 		Addr:    config.Host + ":" + config.Port,
-		Handler: router,
+		Handler: handlers,
 	}
 	_, cancel := context.WithTimeout(context.Background(), time.Second*2)
 	defer cancel()
