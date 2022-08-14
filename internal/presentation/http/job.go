@@ -2,6 +2,7 @@ package http
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -113,6 +114,7 @@ func (h *JobHandler) Update(w http.ResponseWriter, r *http.Request) {
 		AccountId: r.Context().Value("UserId").(uint),
 	})
 	if err != nil {
+		fmt.Println(err.Error())
 		h.errorJSON(w, errors.New("can not update job"), http.StatusNotFound)
 		return
 	}
