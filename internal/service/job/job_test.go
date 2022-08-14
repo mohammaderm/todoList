@@ -70,11 +70,13 @@ func TestGetAll(t *testing.T) {
 		Offset:    1,
 	}
 
-	mockRepo := mocks.NewMockJobRepository(mockCtrl)
-	mockRepo.EXPECT().GetAll(gomock.Any(), gomock.Eq(req.AccountId), gomock.Eq(req.Offset)).Return(&jobs, nil).Times(1)
-
 	mockCache := mocks.NewMockJobCacheInterface(mockCtrl)
-	mockCache.EXPECT().GetAll(gomock.Any(), "1").Return(&jobs, nil).Times(1)
+	cacheResult := mockCache.EXPECT().GetAll(gomock.Any(), "1").Return(&jobs, nil).Times(1)
+
+	mockRepo := mocks.NewMockJobRepository(mockCtrl)
+	if cacheResult == nil {
+		mockRepo.EXPECT().GetAll(gomock.Any(), gomock.Eq(req.AccountId), gomock.Eq(req.Offset)).Return(&jobs, nil).Times(1)
+	}
 
 	log, _ := log.New(&log.Logconfig{})
 	jobService := NewService(log, mockRepo, mockCache)
@@ -110,4 +112,28 @@ func TestDelete(t *testing.T) {
 	err := jobService.Delete(ctx, req)
 
 	require.NoError(t, err)
+}
+
+func TestUpdate(t *testing.T) {
+	mockCtr := gomock.NewController(t)
+	defer mockCtr.Finish()
+
+	req := dto.UpdateJob{
+		Id:        1,
+		AccountId: 1,
+	}
+
+	mockRepo := mocks.NewMockJobRepository(mockCtr)
+	mockRepo.EXPECT().Update(gomock.Any(), gomock.Eq(req.Id), gomock.Eq(req.AccountId)).Return(nil).Times(1)
+
+	mockCache := mocks.NewMockJobCacheInterface(mockCtr)
+	mockCache.EXPECT().DeleteAll(gomock.Any()).Return(nil).Times(1)
+
+	log, _ := log.New(&log.Logconfig{})
+	jobService := NewService(log, mockRepo, mockCache)
+
+	ctx := context.Background()
+	err := jobService.Update(ctx, req)
+	require.NoError(t, err)
+
 }
